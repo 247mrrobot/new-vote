@@ -389,3 +389,36 @@ if (document.getElementById('resultsContainer')) {
     loadResults();
     setInterval(loadResults, 5000); // Auto-refresh every 5s
 }
+
+
+// ==========================================
+// RESET ELECTION
+// ==========================================
+async function resetElection() {
+    const confirm1 = confirm("WARNING: This will permanently delete ALL students, candidates, positions, and votes. Are you sure?");
+    if (!confirm1) return;
+
+    const confirm2 = confirm("Are you absolutely sure? There is no undo button.");
+    if (!confirm2) return;
+
+    try {
+        // We must delete in this order because of database relationships
+        // 1. Delete Votes
+        await supabaseClient.from('votes').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+        
+        // 2. Delete Candidates
+        await supabaseClient.from('candidates').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+        
+        // 3. Delete Positions
+        await supabaseClient.from('positions').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+        
+        // 4. Delete Students
+        await supabaseClient.from('students').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+
+        alert("✅ Election data has been completely reset.");
+        window.location.reload(); // Refresh the page to show empty tables
+    } catch (err) {
+        console.error(err);
+        alert("Error resetting election: " + err.message);
+    }
+}
