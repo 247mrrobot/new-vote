@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroVote Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" style="max-width: 500px; margin-top: 10vh;">
+        <h1 class="neon-title">⚡ ElectroVote</h1>
+        <p style="text-align:center; color:var(--text-secondary); margin-bottom:30px;">Enter your credentials to cast your vote</p>
+        
+        <form id="loginForm">
+            <input type="text" id="indexNum" placeholder="Index Number (e.g., UG1001)" required>
+            <input type="text" id="fullName" placeholder="Full Name" required>
+            <button type="submit" class="glow-btn accent">Sign In</button>
+        </form>
+        <div id="errorMsg" class="error"></div>
+        
+        <div style="text-align:center; margin-top:30px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+            <a href="results.html" class="neon-link">📊 View Live Results</a>
+            <a href="admin.html" class="neon-link">🔧 Admin Panel</a>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

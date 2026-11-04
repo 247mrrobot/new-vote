@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ElectroVote</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- LOGIN SCREEN (Shows first) -->
+    <div id="loginScreen" class="container hidden" style="max-width: 500px; margin-top: 10vh;">
+        <h1 class="neon-title">🔐 Admin Login</h1>
+        <p style="text-align:center; color:var(--text-secondary); margin-bottom:30px;">Authorized personnel only</p>
+        
+        <input type="email" id="adminEmail" placeholder="Admin Email">
+        <input type="password" id="adminPassword" placeholder="Password">
+        <button class="glow-btn accent" onclick="adminLogin()">Login</button>
+        <div id="loginError" class="error"></div>
+        
+        <div style="text-align:center; margin-top:20px;">
+            <a href="index.html" class="neon-link">⬅ Back to Student Login</a>
+        </div>
+    </div>
+
+    <!-- DASHBOARD (Hidden until logged in) -->
+    <div id="dashboardScreen" class="container hidden" style="max-width: 800px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+            <h1 class="neon-title" style="margin:0; text-align:left;">🛠️ Admin Panel</h1>
+            <button class="glow-btn" style="width:auto; padding:10px 20px; font-size:0.8rem;" onclick="adminLogout()">Logout</button>
+        </div>
+
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'students')">Students</button>
+            <button class="tablinks" onclick="openTab(event, 'positions')">Positions</button>
+            <button class="tablinks" onclick="openTab(event, 'candidates')">Candidates</button>
+        </div>
+
+        <!-- STUDENTS TAB -->
+        <div id="students" class="tabcontent active">
+            <h3>Add Student</h3>
+            <input type="text" id="studentIndex" placeholder="Index Number (e.g., UG1001)">
+            <input type="text" id="studentName" placeholder="Full Name">
+            <button class="glow-btn accent" onclick="addStudent()">+ Add Student</button>
+            
+            <h3 style="margin-top:30px;">Registered Students</h3>
+            <table id="studentsTable" style="width: 100%; text-align: left; margin-top: 10px;">
+                <thead><tr><th>Index</th><th>Name</th><th>Status</th></tr></thead>
+                <tbody><tr><td colspan="3" style="text-align:center; opacity:0.6;">Loading...</td></tr></tbody>
+            </table>
+        </div>
+
+        <!-- POSITIONS TAB -->
+        <div id="positions" class="tabcontent">
+            <h3>Add Position</h3>
+            <input type="text" id="positionTitle" placeholder="Position Title (e.g., President)">
+            <input type="number" id="positionOrder" value="0" placeholder="Display Order (0, 1, 2...)">
+            <button class="glow-btn accent" onclick="addPosition()">+ Add Position</button>
+            
+            <h3 style="margin-top:30px;">Existing Positions</h3>
+            <ul id="positionsList" style="list-style:none; padding:0;"><li style="opacity:0.6; text-align:center;">Loading...</li></ul>
+        </div>
+
+        <!-- CANDIDATES TAB -->
+        <div id="candidates" class="tabcontent">
+            <h3>Add Candidate</h3>
+            <select id="candidatePosition"><option value="">-- Select a Position --</option></select>
+            <input type="text" id="candidateName" placeholder="Candidate Name">
+            
+            <input type="file" id="candidateImage" accept="image/*" style="display:none;" onchange="previewImage(this)">
+            <button type="button" class="glow-btn" style="background:rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" onclick="document.getElementById('candidateImage').click()">📷 Choose Photo</button>
+            <small id="fileNameDisplay" style="display:block; text-align:center; margin-top:-5px; margin-bottom:15px; color:var(--text-secondary);">No file selected</small>
+            
+            <button class="glow-btn accent" onclick="addCandidate()">+ Add Candidate</button>
+            
+            <h3 style="margin-top:30px;">Candidates List</h3>
+            <div id="candidatesList" style="margin-top:10px;"><p style="opacity:0.6; text-align:center;">Loading...</p></div>
+        </div>
+
+        <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; display:flex; justify-content:space-between;">
+            <a href="results.html" class="neon-link" style="margin:0;">📊 View Live Results</a>
+            <a href="index.html" class="neon-link" style="margin:0;">⬅ Back to Login</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
